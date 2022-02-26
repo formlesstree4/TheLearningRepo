@@ -33,20 +33,23 @@ public class SimpleAnimatorAndMovement : MonoBehaviour
     void Update()
     {
         frameCount++;
+        UpdateSprite(frameCount >= frameDelay);
         if (frameCount < frameDelay) return;
-        UpdateSprite();
         UpdateMovement();
         frameCount = 0;
     }
 
-    private void UpdateSprite()
+    private void UpdateSprite(bool updateIndex)
     {
         if (isDead)
         {
             currentSprite = DEATH_SPRITE;
             return;
         }
-        spriteIndex++;
+        if (updateIndex)
+        {
+            spriteIndex++;
+        }
         if (spriteIndex == SPRITES.Count)
         {
             spriteIndex = 0;
@@ -56,6 +59,11 @@ public class SimpleAnimatorAndMovement : MonoBehaviour
 
     private void UpdateMovement()
     {
+        if (isDead)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
         if (movementToggled)
         {
             horizontalMovementSpeed *= -1;

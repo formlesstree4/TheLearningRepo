@@ -11,7 +11,6 @@ public class RegularEnemyBehavior : MonoBehaviour
 
     public bool shouldToggleMovement;
 
-
     void Update()
     {
         spriteRenderer.sprite = animationAndMovement.GetCurrentSprite;
@@ -24,7 +23,7 @@ public class RegularEnemyBehavior : MonoBehaviour
         shouldToggleMovement = Assets.Constants.TriggeredByWall(collision);
         if (Assets.Constants.TriggeredByPlayerBullet(collision))
         {
-            Destroy(this.gameObject);
+            animationAndMovement.SetIsDead();
         }
     }
 

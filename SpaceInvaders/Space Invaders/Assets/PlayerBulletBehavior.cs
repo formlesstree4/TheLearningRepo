@@ -35,7 +35,7 @@ public class PlayerBulletBehavior : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Assets.Constants.TriggeredByPlayerHome(collision) || Assets.Constants.TriggeredByPlayer(collision))
+        if (Assets.Constants.PlayerBulletIgnoreCollision(collision))
         {
             return;
         }

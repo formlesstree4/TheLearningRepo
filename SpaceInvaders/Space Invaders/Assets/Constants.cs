@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets
 {
@@ -9,10 +8,22 @@ namespace Assets
         public const string LOWER_EDGE_COLLISION_BOX = "lowerEdge";
         public const string LEFT_EDGE_COLLISION_BOX = "leftEdge";
         public const string RIGHT_EDGE_COLLISION_BOX = "rightEdge";
+        public const string ENEMY_WIN_COLLISION_BOX = "enemiesWin";
         public const string PLAYER_BULLET = "PlayerBullet";
         public const string ENEMY_BULLET = "EnemyBullet";
         public const string PLAYER_HOMES = "PlayerHomes";
         public const string PLAYER_NAME = "Player";
+
+        public const string ENEMY_TAG = "enemy";
+
+
+        private static readonly string[] PLAYER_BULLET_IGNORE = new[]
+        {
+            PLAYER_BULLET,
+            PLAYER_HOMES,
+            ENEMY_WIN_COLLISION_BOX,
+            PLAYER_NAME
+        };
 
 
         public static bool TriggeredByWall(Collider2D collision)
@@ -29,14 +40,21 @@ namespace Assets
             return collision.gameObject.name == PLAYER_NAME;
         }
 
-        public static bool TriggeredByPlayerBullet(Collider2D collision)
+        public static bool PlayerBulletIgnoreCollision(Collider2D collision)
         {
-            return collision.gameObject.name == PLAYER_BULLET;
+            foreach(var ignore in PLAYER_BULLET_IGNORE)
+            {
+                if (ignore == collision.gameObject.name)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public static bool TriggeredByPlayerHome(Collider2D collision)
+        internal static bool TriggeredByPlayerBullet(Collider2D collision)
         {
-            return collision.gameObject.name == PLAYER_HOMES;
+            return collision.gameObject.name == PLAYER_BULLET;
         }
 
     }

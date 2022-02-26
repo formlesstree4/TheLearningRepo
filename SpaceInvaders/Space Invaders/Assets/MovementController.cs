@@ -3,7 +3,7 @@ using UnityEngine;
 public class MovementController : MonoBehaviour
 {
 
-    public Camera BoundingBox;
+    public Camera world;
 
     public Rigidbody2D body;
 
@@ -12,6 +12,12 @@ public class MovementController : MonoBehaviour
     public GameObject bulletPrefab;
 
     private GameObject currentBullet;
+
+
+    void Start()
+    {
+        
+    }
 
     public void OnMove(UnityEngine.InputSystem.InputValue value)
     {
