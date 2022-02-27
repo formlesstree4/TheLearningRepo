@@ -20,7 +20,13 @@ public class RegularEnemyBehavior : MonoBehaviour
 
     private GameObject currentBullet;
 
+    private AudioSource audioSource;
+
     private float timeSinceLastBullet;
+
+    
+    private AudioClip shoot;
+    private AudioClip explosion;
 
 
     public void ResetToggle()
@@ -33,6 +39,9 @@ public class RegularEnemyBehavior : MonoBehaviour
         animationAndMovement = GetComponent<SimpleAnimatorAndMovement>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
+        audioSource = GetComponent<AudioSource>();
+        shoot = Resources.Load<AudioClip>("SFX\\shoot");
+        explosion = Resources.Load<AudioClip>("SFX\\invaderkilled");
     }
 
     void FixedUpdate()
@@ -52,6 +61,11 @@ public class RegularEnemyBehavior : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         shouldToggleMovement = Assets.Constants.TriggeredByWall(collision);
+        if (Assets.Constants.TriggeredByPlayerBullet(collision))
+        {
+            audioSource.clip = explosion;
+            audioSource.Play();
+        }
         if (Assets.Constants.TriggeredByDeathPlane(collision))
         {
             GameState.Died();
@@ -69,6 +83,8 @@ public class RegularEnemyBehavior : MonoBehaviour
         var bulletLocation = currentBullet.GetComponent<Rigidbody2D>();
         var bulletCollider = currentBullet.GetComponent<BoxCollider2D>();
         bulletLocation.position -= new Vector2(0, (bulletCollider.size.y / 2) + (boxCollider.size.y / 2));
+        audioSource.clip = shoot;
+        audioSource.Play();
     }
 
 }
