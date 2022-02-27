@@ -62,7 +62,7 @@ namespace Assets.State
 
         public static void LoadLevelDisplay()
         {
-
+            SceneManager.LoadScene("Level Display", LoadSceneMode.Single);
         }
 
     }
