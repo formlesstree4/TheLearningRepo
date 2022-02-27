@@ -87,12 +87,4 @@ public class RegularEnemyBehavior : MonoBehaviour
         audioSource.Play();
     }
 
-    void OnDestroy()
-    {
-        if (currentBullet != null)
-        {
-            currentBullet.transform.parent = null;
-        }
-    }
-
 }
