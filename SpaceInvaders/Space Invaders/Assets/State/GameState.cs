@@ -9,6 +9,7 @@ namespace Assets.State
         private static int currentGameLevel;
         private static bool isInitialized = false;
         private static bool isDead = false;
+        private static bool isMovingLevels = false;
 
         public static int CurrentGameLevel => currentGameLevel;
 
@@ -18,6 +19,7 @@ namespace Assets.State
 
         public static void InitializeGameState()
         {
+            isMovingLevels = false;
             if (isInitialized) return;
             currentGameLevel = 1;
             isInitialized = true;
@@ -25,14 +27,14 @@ namespace Assets.State
 
         public static void GoToNextLevel()
         {
+            isMovingLevels = true;
             currentGameLevel++;
             LoadLevelDisplay();
         }
 
         public static void Died()
         {
-            if (!isInitialized) return;
-            if (isDead) return;
+            if (!isInitialized || isDead || isMovingLevels) return;
             isDead = true;
             lives--;
             if (lives == 0)
