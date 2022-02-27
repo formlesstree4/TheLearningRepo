@@ -1,8 +1,10 @@
 using Assets.Extensions;
+using Assets.State;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
@@ -11,6 +13,18 @@ public class LevelController : MonoBehaviour
     public int Level = 0;
     public Camera gameCamera;
     public List<GameObject> enemies;
+
+    private Text levelText;
+
+    void Start()
+    {
+        levelText = GetComponentInChildren<Text>();
+    }
+
+    void Update()
+    {
+        levelText.text = string.Format("Lives: {0}", GameState.CurrentLives);
+    }
 
     public void IncrementLevelAndLoad(float horizontalSpeed, float verticalSpeed)
     {
@@ -22,6 +36,13 @@ public class LevelController : MonoBehaviour
     {
         var levelResourceData = (TextAsset)Resources.Load(string.Format("Levels\\{0}", Level), typeof(TextAsset));
         var itemsToRender = new List<string>();
+
+        if (levelResourceData == null || levelResourceData.text.Length == 0)
+        {
+            Application.Quit();
+            return;
+        }
+
         itemsToRender.AddRange(levelResourceData.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
         
         var maxRowSize = itemsToRender.Max(f => f.Length);

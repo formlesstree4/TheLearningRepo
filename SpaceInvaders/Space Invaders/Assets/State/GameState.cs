@@ -5,6 +5,7 @@ namespace Assets.State
     public static class GameState
     {
 
+        private static int lives = 3;
         private static int currentGameLevel;
         private static bool isInitialized = false;
         private static bool isDead = false;
@@ -12,6 +13,8 @@ namespace Assets.State
         public static int CurrentGameLevel => currentGameLevel;
 
         public static bool IsDead => isDead;
+
+        public static int CurrentLives => lives;
 
         public static void InitializeGameState()
         {
@@ -23,13 +26,23 @@ namespace Assets.State
         public static void GoToNextLevel()
         {
             currentGameLevel++;
-            SceneManager.LoadScene("Level Display", LoadSceneMode.Single);
+            LoadLevelDisplay();
         }
 
         public static void Died()
         {
+            if (!isInitialized) return;
+            if (isDead) return;
             isDead = true;
-            SceneManager.LoadScene("Level Display", LoadSceneMode.Single);
+            lives--;
+            if (lives == 0)
+            {
+                LoadGameOver();
+            }
+            else
+            {
+                LoadLevelDisplay();
+            }
         }
 
         public static void Reset()
@@ -41,5 +54,16 @@ namespace Assets.State
         {
             SceneManager.LoadScene("Main", LoadSceneMode.Single);
         }
+
+        public static void LoadGameOver()
+        {
+            SceneManager.LoadScene("Game Over", LoadSceneMode.Single);
+        }
+
+        public static void LoadLevelDisplay()
+        {
+
+        }
+
     }
 }

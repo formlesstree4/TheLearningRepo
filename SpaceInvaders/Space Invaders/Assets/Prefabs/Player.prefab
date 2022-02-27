@@ -145,10 +145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81717f8e224e66b488bbabd7038e8e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoundingBox: {fileID: 0}
-  body: {fileID: 4723995097808052948}
-  boxCollider: {fileID: 7830422266112784613}
+  world: {fileID: 0}
   bulletPrefab: {fileID: 919604490236219692, guid: 20150f540873ff140b80845d19e0299d, type: 3}
+  deathSprite: {fileID: 5987251168772242554, guid: 8adf84e27943f41439bbf18d500a97a4, type: 3}
 --- !u!114 &8818655686632792814
 MonoBehaviour:
   m_ObjectHideFlags: 0
