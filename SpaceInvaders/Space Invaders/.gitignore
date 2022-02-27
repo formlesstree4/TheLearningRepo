@@ -464,6 +464,12 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# Additional auto-generated folders
+/Temp
+/obj
+/Library
+/Logs
+
 ### VisualStudio ###
 
 # User-specific files
