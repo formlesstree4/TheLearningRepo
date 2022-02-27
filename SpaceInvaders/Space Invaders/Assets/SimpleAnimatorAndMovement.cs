@@ -10,33 +10,52 @@ public class SimpleAnimatorAndMovement : MonoBehaviour
 
     public Rigidbody2D rigidBody;
 
-    public int frameDelay = 240;
+    public float startingSpeed = 0.4f;
 
-    public int minimumFrameDelay = 80;
+    public float endingSpeed = 0.1f;
+
+    public float secondsBetweenMovement = 0.4f;
 
     public float horizontalMovementSpeed = 0.08f;
 
     public float verticalMovementSpeed = 0.15f;
+    
+    public bool IsAwaitingToggle => movementToggled;
+
+    public Sprite GetCurrentSprite => currentSprite;
+
 
 
     private Sprite currentSprite;
 
     private int spriteIndex = 0;
 
-    private int frameCount = 0;
-
     private bool movementToggled = false;
 
     private bool isDead = false;
 
+    private float timeTracking = 0.0f;
 
-    void Update()
+
+    void FixedUpdate()
     {
-        frameCount++;
-        UpdateSprite(frameCount >= frameDelay);
-        if (frameCount < frameDelay) return;
-        UpdateMovement();
-        frameCount = 0;
+        if (isDead) secondsBetweenMovement = startingSpeed;
+        timeTracking += Time.deltaTime;
+        UpdateSprite(timeTracking > secondsBetweenMovement);
+        if (timeTracking > secondsBetweenMovement)
+        {
+            UpdateMovement();
+            timeTracking = 0.0f;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (Assets.Constants.TriggeredByPlayerBullet(collision))
+        {
+            timeTracking = 0; // reset the animation tracker so we can hold spite longer
+            isDead = true;
+        }
     }
 
     private void UpdateSprite(bool updateIndex)
@@ -61,7 +80,7 @@ public class SimpleAnimatorAndMovement : MonoBehaviour
     {
         if (isDead)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             return;
         }
         if (movementToggled)
@@ -78,15 +97,5 @@ public class SimpleAnimatorAndMovement : MonoBehaviour
     {
         movementToggled = true;
     }
-
-    public void SetIsDead()
-    {
-        isDead = true;
-    }
-    
-
-    public bool IsAwaitingToggle => movementToggled;
-
-    public Sprite GetCurrentSprite => currentSprite;
 
 }

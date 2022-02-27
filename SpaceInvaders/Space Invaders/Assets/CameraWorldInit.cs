@@ -28,8 +28,8 @@ public class CameraWorldInit : MonoBehaviour
 
         EdgeCollider2D lowerEdge = new GameObject(Assets.Constants.LOWER_EDGE_COLLISION_BOX).AddComponent<EdgeCollider2D>();
         colliderpoints = lowerEdge.points;
-        colliderpoints[0] = new Vector2(lDCorner.x, lDCorner.y);
-        colliderpoints[1] = new Vector2(rUCorner.x, lDCorner.y);
+        colliderpoints[0] = new Vector2(lDCorner.x, lDCorner.y + (lDCorner.y * 0.1f));
+        colliderpoints[1] = new Vector2(rUCorner.x, lDCorner.y + (lDCorner.y * 0.1f));
         lowerEdge.points = colliderpoints;
 
         EdgeCollider2D leftEdge = new GameObject(Assets.Constants.LEFT_EDGE_COLLISION_BOX).AddComponent<EdgeCollider2D>();

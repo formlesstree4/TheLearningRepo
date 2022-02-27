@@ -26,7 +26,7 @@ namespace Assets
         };
 
 
-        public static bool TriggeredByWall(Collider2D collision)
+        internal static bool TriggeredByWall(Collider2D collision)
         {
             return
                 (collision.gameObject.name == UPPER_EDGE_COLLISION_BOX) ||
@@ -35,12 +35,12 @@ namespace Assets
                 (collision.gameObject.name == RIGHT_EDGE_COLLISION_BOX);
         }
 
-        public static bool TriggeredByPlayer(Collider2D collision)
+        internal static bool TriggeredByPlayer(Collider2D collision)
         {
             return collision.gameObject.name == PLAYER_NAME;
         }
 
-        public static bool PlayerBulletIgnoreCollision(Collider2D collision)
+        internal static bool PlayerBulletIgnoreCollision(Collider2D collision)
         {
             foreach(var ignore in PLAYER_BULLET_IGNORE)
             {
@@ -55,6 +55,16 @@ namespace Assets
         internal static bool TriggeredByPlayerBullet(Collider2D collision)
         {
             return collision.gameObject.name == PLAYER_BULLET;
+        }
+
+        internal static bool TriggeredByEnemyBullet(Collider2D collision)
+        {
+            return collision.gameObject.name == ENEMY_BULLET;
+        }
+
+        internal static bool TriggeredByDeathPlane(Collider2D collision)
+        {
+            return collision.gameObject.name == ENEMY_WIN_COLLISION_BOX;
         }
 
     }

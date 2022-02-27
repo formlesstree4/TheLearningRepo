@@ -98,10 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf737a53c30913d47975209e57a64aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationAndMovement: {fileID: 7260182764442288046}
-  spriteRenderer: {fileID: 7653037670097730618}
-  boxCollider: {fileID: -527089771629314124}
   shouldToggleMovement: 0
+  shootingPercentage: 0.1
+  secondsBetweenShootAttempt: 5
+  bulletPrefab: {fileID: 919604490236219692, guid: becfcf4b0ab24344c9487e089c253ede, type: 3}
 --- !u!61 &-527089771629314124
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -166,7 +166,8 @@ MonoBehaviour:
   - {fileID: -2550038084396909842, guid: 8adf84e27943f41439bbf18d500a97a4, type: 3}
   DEATH_SPRITE: {fileID: 5987251168772242554, guid: 8adf84e27943f41439bbf18d500a97a4, type: 3}
   rigidBody: {fileID: 290115402273604064}
-  frameDelay: 240
-  minimumFrameDelay: 80
+  startingSpeed: 0.4
+  endingSpeed: 0.1
+  secondsBetweenMovement: 0.4
   horizontalMovementSpeed: 0.08
   verticalMovementSpeed: 0.15

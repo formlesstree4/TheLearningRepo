@@ -1,3 +1,4 @@
+using Assets.State;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,10 +6,13 @@ using UnityEngine.UI;
 public class RenderLevelDetails : MonoBehaviour
 {
 
-    // Start is called before the first frame update
     void Start()
     {
-        Assets.State.GameState.CurrentGameLevel += 1;
+        GameState.InitializeGameState();
+        if (GameState.IsDead)
+        {
+            GameState.Reset();
+        }
         GetComponentInChildren<Text>().text = string.Format("Level {0}", Assets.State.GameState.CurrentGameLevel);
         StartCoroutine(ChangeToLevelScene());
     }
@@ -16,7 +20,7 @@ public class RenderLevelDetails : MonoBehaviour
     IEnumerator ChangeToLevelScene()
     {
         yield return new WaitForSecondsRealtime(4.0f);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Main", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        GameState.LoadGameScene();
     }
 
 }

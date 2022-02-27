@@ -1,11 +1,8 @@
+using Assets.State;
 using UnityEngine;
 
 public class EnemyMovementController : MonoBehaviour
 {
-
-    public int MaximumFrameDelay = 240;
-
-    public int MinimumFrameDelay = 80;
 
     public float HorizontalMovementSpeed = 0.08f;
 
@@ -17,16 +14,15 @@ public class EnemyMovementController : MonoBehaviour
 
     private int currentEnemies;
 
-
     void Start()
     {
         levelController = GetComponent<LevelController>();
-        levelController.IncrementLevelAndLoad(HorizontalMovementSpeed, VerticalMovementSpeed, MaximumFrameDelay, MinimumFrameDelay);
+        levelController.IncrementLevelAndLoad(HorizontalMovementSpeed, VerticalMovementSpeed);
         SetEnemyCount();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         // gather all active "enemy" prefabs
@@ -35,8 +31,7 @@ public class EnemyMovementController : MonoBehaviour
 
         if (onScreenEnemies.Length == 0)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Level Display", UnityEngine.SceneManagement.LoadSceneMode.Single);
-            // SetEnemyCount();
+            GameState.GoToNextLevel();
             return;
         }
 
@@ -71,13 +66,7 @@ public class EnemyMovementController : MonoBehaviour
 
         if (speedUpEnemies)
         {
-            var percentage = ((float)currentEnemies / (float)totalEnemies);
-            var newDelay = MinimumFrameDelay + Mathf.RoundToInt((MaximumFrameDelay - (float)MinimumFrameDelay) * percentage);
-            if (percentage < 0.5)
-            {
-                newDelay = Mathf.FloorToInt((float)newDelay + (float)newDelay * 0.3f);
-            }
-
+            var percentage = ((float)currentEnemies / totalEnemies);
             for (var i = 0; onScreenEnemies.Length > i; i++)
             {
                 // we need to calculate the ratio of the frameSkip
@@ -85,9 +74,9 @@ public class EnemyMovementController : MonoBehaviour
                 // so we need to calculate a "percentage" value of sorts
                 // where we get a number between min and max.
                 // f(x) = min + (max - min) * x
-
                 var enemy = onScreenEnemies[i].GetComponent<RegularEnemyBehavior>();
-                enemy.animationAndMovement.frameDelay = newDelay;
+                var newDelay = enemy.animationAndMovement.endingSpeed + (enemy.animationAndMovement.startingSpeed - enemy.animationAndMovement.endingSpeed) * percentage;
+                enemy.animationAndMovement.secondsBetweenMovement = newDelay;
             }
         }
 

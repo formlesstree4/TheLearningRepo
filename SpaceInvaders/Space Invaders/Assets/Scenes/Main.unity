@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b94109657ab3e24aa8710445ede952c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaximumFrameDelay: 240
+  MaximumFrameDelay: 180
   MinimumFrameDelay: 80
   HorizontalMovementSpeed: 0.08
   VerticalMovementSpeed: 0.15

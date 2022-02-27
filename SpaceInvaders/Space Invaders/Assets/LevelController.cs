@@ -12,13 +12,13 @@ public class LevelController : MonoBehaviour
     public Camera gameCamera;
     public List<GameObject> enemies;
 
-    public void IncrementLevelAndLoad(float horizontalSpeed, float verticalSpeed, int frameDelay, int minFrameDelay)
+    public void IncrementLevelAndLoad(float horizontalSpeed, float verticalSpeed)
     {
         Level = Assets.State.GameState.CurrentGameLevel;
-        LoadCurrentLevel(horizontalSpeed, verticalSpeed, frameDelay, minFrameDelay);
+        LoadCurrentLevel(horizontalSpeed, verticalSpeed);
     }
 
-    void LoadCurrentLevel(float horizontalSpeed, float verticalSpeed, int frameDelay, int minFrameDelay)
+    void LoadCurrentLevel(float horizontalSpeed, float verticalSpeed)
     {
         var levelResourceData = (TextAsset)Resources.Load(string.Format("Levels\\{0}", Level), typeof(TextAsset));
         var itemsToRender = new List<string>();
@@ -53,13 +53,11 @@ public class LevelController : MonoBehaviour
                     var movement = enemy.GetComponent<SimpleAnimatorAndMovement>();
                     movement.horizontalMovementSpeed = horizontalSpeed;
                     movement.verticalMovementSpeed = verticalSpeed;
-                    movement.frameDelay = frameDelay;
-                    movement.minimumFrameDelay = minFrameDelay;
                     enemyCount++;
                 }
                 startingXPosition += cellWidth;
             }
-            currentYPosition -= (cellWidth/2);
+            currentYPosition -= (cellWidth/1.5f);
         }
 
         Enemies = enemyCount;

@@ -1,3 +1,4 @@
+using Assets.State;
 using UnityEngine;
 
 public class MovementController : MonoBehaviour
@@ -5,22 +6,18 @@ public class MovementController : MonoBehaviour
 
     public Camera world;
 
-    public Rigidbody2D body;
-
-    public BoxCollider2D boxCollider;
-
     public GameObject bulletPrefab;
+
+    private Rigidbody2D body;
+
+    private BoxCollider2D boxCollider;
 
     private GameObject currentBullet;
 
-
-    void Start()
-    {
-        
-    }
-
     public void OnMove(UnityEngine.InputSystem.InputValue value)
     {
+        body = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         body.velocity = value.Get<Vector2>() * 4;
     }
 
@@ -30,13 +27,19 @@ public class MovementController : MonoBehaviour
         {
             return;
         }
-        
         currentBullet = Instantiate(bulletPrefab, transform);
         currentBullet.name = Assets.Constants.PLAYER_BULLET;
         var bulletLocation = currentBullet.GetComponent<Rigidbody2D>();
         var bulletCollider = currentBullet.GetComponent<BoxCollider2D>();
-
         bulletLocation.position += new Vector2(0, (bulletCollider.size.y / 2) + (boxCollider.size.y / 2));
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (Assets.Constants.TriggeredByEnemyBullet(collision))
+        {
+            GameState.Died();
+        }
     }
 
 }
