@@ -18,15 +18,25 @@ public class MovementController : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    private AudioSource audioSource;
+
     private bool isDead;
 
     private float waitTimeForDeath = 1.0f;
 
     private float timeSinceDeath = 0.0f;
 
+    private AudioClip shoot;
+
+    private AudioClip explosion;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        shoot = Resources.Load<AudioClip>("SFX\\shoot");
+        explosion = Resources.Load<AudioClip>("SFX\\explosion");
     }
 
     void FixedUpdate()
@@ -61,12 +71,16 @@ public class MovementController : MonoBehaviour
         var bulletLocation = currentBullet.GetComponent<Rigidbody2D>();
         var bulletCollider = currentBullet.GetComponent<BoxCollider2D>();
         bulletLocation.position += new Vector2(0, (bulletCollider.size.y / 2) + (boxCollider.size.y / 2));
+        audioSource.clip = shoot;
+        audioSource.Play();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (Assets.Constants.TriggeredByEnemyBullet(collision))
         {
+            audioSource.clip = explosion;
+            audioSource.Play();
             isDead = true;
             spriteRenderer.sprite = deathSprite;
         }
