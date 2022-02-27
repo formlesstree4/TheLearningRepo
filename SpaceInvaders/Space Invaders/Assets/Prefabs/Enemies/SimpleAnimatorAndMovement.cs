@@ -8,7 +8,7 @@ public class SimpleAnimatorAndMovement : MonoBehaviour
 
     public Sprite DEATH_SPRITE;
 
-    public Rigidbody2D rigidBody;
+    private Rigidbody2D rigidBody;
 
     public float startingSpeed = 0.4f;
 
@@ -36,6 +36,11 @@ public class SimpleAnimatorAndMovement : MonoBehaviour
 
     private float timeTracking = 0.0f;
 
+
+    void Start()
+    {
+        rigidBody = GetComponent<Rigidbody2D>();
+    }
 
     void FixedUpdate()
     {
