@@ -1,5 +1,12 @@
 # TheLearningRepo
-A repo where I learn about making video games 'n stuff
+A personal repository of me learning to program some simple retro games.
 
 # Current Projects
-For now, I'm working on a Space Invaders "clone". It's a clone because I'm only incorporating simliar behavior but with my own levels 'n stuff. Don't care about the rest. But I am working on it so that's kinda cool.
+- Space Invaders
+
+# Planned Projects
+These are in no particular order
+- Asteroids
+- Missile Command
+- Centipede
+- Tempest
